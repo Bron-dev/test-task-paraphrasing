@@ -1,20 +1,20 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { Inter } from 'next/font/google';
+import { Toaster } from 'sonner';
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#1976d2',
-    },
-  },
+import theme from '@/theme/theme';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
 });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <main className={inter.className}>
       <Head>
         <title>AI Paraphrasing Tool</title>
         <meta name="description" content="AI-based text paraphraser" />
@@ -23,7 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
+        <Toaster position="top-center" richColors closeButton />
       </ThemeProvider>
-    </>
+    </main>
   );
 }
