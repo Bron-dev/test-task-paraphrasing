@@ -1,40 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🚀 AI Paraphraser (Next.js + MUI + React Query)
 
-## Getting Started
+A small but smart app that paraphrases your text using multiple AI providers.  
+If one model dies or takes too long — another one jumps in instantly ⚡
 
-First, run the development server:
+---
+
+## 🧠 Features
+- 🔁 **Fallback logic:** OpenAI → Gemini and others (first to respond wins)
+- 💬 **Clean UI:** built with MUI and a custom theme
+- 🧹 **Hidden scrollbars:** sleek and minimal UX
+- ⚙️ **React Query:** handles request states, caching, and error recovery
+- 🔔 **Notifications:** success, timeout, and fallback messages
+
+---
+
+## 🧩 Requirements
+
+- **Node.js** ≥ 18
+- **npm**, **pnpm**, or **yarn**
+- API keys for AI providers:
+    - `GEMINI_KEY`
+    - `OPENAI_KEY`
+
+---
+
+## ⚙️ Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# 1. Clone the repository
+git clone https://github.com/Bron-dev/test-task-paraphrasing.git
+cd test-task-paraphrasing
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 2. Install dependencies
+npm install
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+# 3. Create your local env file
+cp .env
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# 4. Fill it in
+NEXT_PUBLIC_GEMINI_KEY={you know where to find it, right?;)}
+NEXT_PUBLIC_OPENAI_KEY={you know where to find it, right?;)}
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+# 5. npm run dev , go to http://localhost:3000 and enjoy
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+MIT © 2025 — made with ❤️ and TypeScript.
