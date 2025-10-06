@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { PROVIDERS, DELAY_BEFORE_FALLBACK_STARTING } from '@/lib/constants';
 import { notification } from '@/lib/utils';
-import { APIProvider } from '@/lib/types';
+import { APIProvider, GeminiResponse, OpenAIResponse } from '@/lib/types';
 
 async function fetchFromProvider(
-  provider: APIProvider,
+  provider: APIProvider<OpenAIResponse> | APIProvider<GeminiResponse>,
   text: string,
   signal?: AbortSignal
 ): Promise<string> {
