@@ -1,16 +1,6 @@
-export type Provider = {
-  name: string;
-  isPrioritized?: boolean;
-  buildRequest: (text: string) => {
-    url: string;
-    headers: Record<string, string>;
-    body: string;
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  parseResponse: (data: any) => string;
-};
+import { APIProvider } from '@/lib/types';
 
-export const PROVIDERS: Provider[] = [
+export const PROVIDERS: APIProvider[] = [
   {
     name: 'openai',
     isPrioritized: true,
@@ -39,6 +29,8 @@ export const PROVIDERS: Provider[] = [
     parseResponse: (data) => data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response',
   },
 ];
+
+export const DELAY_BEFORE_FALLBACK_STARTING = 3000;
 
 export const SAMPLE_TEXT =
   'The Border Collie is a highly intelligent and versatile breed known for its exceptional herding abilities. Originating from the border region between England and Scotland, this breed has been recognized as one of the most skilled working dogs in the world. With their distinctive appearance and remarkable intelligence, Border Collies have become a popular choice for both working and companion dogs.\n' +

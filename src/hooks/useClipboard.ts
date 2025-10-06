@@ -5,12 +5,6 @@ interface UseClipboardOptions {
   onPaste?: (text: string) => void;
 }
 
-/**
- * A simple, utility-style clipboard hook.
- * Provides a paste function that reads text from the user's clipboard
- * and handles notifications + errors internally.
- */
-
 export const useClipboard = ({ onPaste }: UseClipboardOptions = {}) => {
   const pasteFromClipboard = useCallback(async () => {
     try {

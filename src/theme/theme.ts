@@ -1,36 +1,7 @@
 import { createTheme } from '@mui/material/styles';
-import '@mui/material/styles';
-
-declare module '@mui/material/styles' {
-  interface Palette {
-    greyNeutral: {
-      30: string;
-      40: string;
-      60: string;
-      80: string;
-    };
-    bluePrimary: {
-      40: string;
-    };
-  }
-  interface PaletteOptions {
-    greyNeutral?: {
-      30?: string;
-      40?: string;
-      60?: string;
-      80?: string;
-    };
-    bluePrimary?: {
-      40?: string;
-    };
-  }
-}
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
-    primary: { main: '#1976d2' },
-    secondary: { main: '#9c27b0' },
     greyNeutral: {
       30: '#76777A',
       40: '#AEAFB1',
