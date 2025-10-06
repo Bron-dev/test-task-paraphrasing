@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>AI Paraphrasing Tool</title>
         <meta name="description" content="AI-based text paraphraser" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="robots" content="index, follow" />
       </Head>
       <QueryClientProvider client={client}>
         <ThemeProvider theme={theme}>

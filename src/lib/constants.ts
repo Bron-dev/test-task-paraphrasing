@@ -1,6 +1,6 @@
-import { APIProvider } from '@/lib/types';
+import { APIProvider, OpenAIResponse, GeminiResponse } from '@/lib/types';
 
-export const PROVIDERS: APIProvider[] = [
+export const PROVIDERS: [APIProvider<OpenAIResponse>, APIProvider<GeminiResponse>] = [
   {
     name: 'openai',
     isPrioritized: true,

@@ -1,4 +1,4 @@
-export type APIProvider = {
+export type APIProvider<TResponse = unknown> = {
   name: string;
   isPrioritized?: boolean;
   buildRequest: (text: string) => {
@@ -6,6 +6,13 @@ export type APIProvider = {
     headers: Record<string, string>;
     body: string;
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  parseResponse: (data: any) => string;
+  parseResponse: (data: TResponse) => string;
+};
+
+export type OpenAIResponse = {
+  choices?: { message?: { content?: string } }[];
+};
+
+export type GeminiResponse = {
+  candidates?: { content?: { parts?: { text?: string }[] } }[];
 };
