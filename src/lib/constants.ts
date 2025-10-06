@@ -1,3 +1,45 @@
+export type Provider = {
+  name: string;
+  isPrioritized?: boolean;
+  buildRequest: (text: string) => {
+    url: string;
+    headers: Record<string, string>;
+    body: string;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  parseResponse: (data: any) => string;
+};
+
+export const PROVIDERS: Provider[] = [
+  {
+    name: 'openai',
+    isPrioritized: true,
+    buildRequest: (text) => ({
+      url: 'https://api.openai.com/v1/chat/completions',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-5',
+        messages: [{ role: 'user', content: `Paraphrase: ${text}` }],
+      }),
+    }),
+    parseResponse: (data) => data?.choices?.[0]?.message?.content || 'No response',
+  },
+  {
+    name: 'gemini',
+    buildRequest: (text) => ({
+      url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_KEY}`,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: `Paraphrase: ${text}` }] }],
+      }),
+    }),
+    parseResponse: (data) => data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response',
+  },
+];
+
 export const SAMPLE_TEXT =
   'The Border Collie is a highly intelligent and versatile breed known for its exceptional herding abilities. Originating from the border region between England and Scotland, this breed has been recognized as one of the most skilled working dogs in the world. With their distinctive appearance and remarkable intelligence, Border Collies have become a popular choice for both working and companion dogs.\n' +
   'Physically, Border Collies are medium-sized dogs with a well-proportioned body and a strong, agile build. They have a dense double coat that comes in a variety of colors, including black and white, red and white, and tricolor. Their expressive eyes, usually brown but sometimes blue, are one of their most striking features, reflecting their intelligence and eagerness to please.\n' +

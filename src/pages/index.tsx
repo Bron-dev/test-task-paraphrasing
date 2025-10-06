@@ -7,22 +7,35 @@ import CloseIcon from '@mui/icons-material/Close';
 import { ActionCardButton } from '@/components/ui/ActionCardButton';
 import { RoundedIconButton } from '@/components/ui/RoundedIconButton';
 import { PageHeader } from '@/components/layout/Header';
-import { SAMPLE_TEXT } from '@/lib/constants';
 import { useClipboard } from '@/hooks/useClipboard';
+import { useParaphrase } from '@/hooks/useParaphrase';
+import { SAMPLE_TEXT } from '@/lib/constants';
 
 import { hideScrollbar } from '@/styles/utils';
 
 export default function Home() {
-  const [text, setText] = useState('');
-  const [error] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const {
+    mutate: paraphraseText,
+    data,
+    error,
+    isPending: isAnswerLoading,
+    isSuccess,
+  } = useParaphrase();
 
   const { pasteFromClipboard } = useClipboard({
-    onPaste: (clipboardText) => setText(clipboardText),
+    onPaste: (clipboardText) => setInputValue(clipboardText),
   });
 
-  const handleClearTextInput = () => setText('');
-  const handlePasteSampleText = () => setText(SAMPLE_TEXT);
-  const handleParaphraseButtonClick = () => console.log('clicked');
+  const handleParaphrase = () => {
+    if (!inputValue.trim()) return;
+    paraphraseText(inputValue);
+  };
+
+  const handleClearTextInput = () => setInputValue('');
+  const handlePasteSampleText = () => setInputValue(SAMPLE_TEXT);
+
+  console.log(data);
 
   const BottomBtnBoxHeight = '66px';
 
@@ -51,21 +64,25 @@ export default function Home() {
             borderWidth: '1px',
             borderStyle: 'solid',
             borderColor: 'greyNeutral.60',
-            backgroundColor: text ? 'white' : 'greyNeutral.80',
+            backgroundColor: inputValue ? 'white' : 'greyNeutral.80',
             px: 2,
             pt: 1,
-            pb: text ? BottomBtnBoxHeight : 1,
+            pb: isSuccess ? 1 : BottomBtnBoxHeight,
           }}
         >
           <InputBase
             placeholder="Enter text here or upload file to humanize it."
             multiline
             fullWidth
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            disabled={isAnswerLoading}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
             sx={{
               width: '100%',
               display: 'block',
+              ':disabled': {
+                color: 'greyNeutral.30',
+              },
               '&::placeholder': {
                 color: 'greyNeutral.30',
                 fontWeight: 600,
@@ -77,40 +94,42 @@ export default function Home() {
           />
         </Box>
 
-        <Box
-          sx={{
-            p: 1,
-            display: 'flex',
-            gap: 1,
-            justifyContent: 'flex-end',
-            backgroundColor: 'white',
-            borderWidth: '1px',
-            borderStyle: 'solid',
-            borderColor: 'greyNeutral.60',
-            borderBottomLeftRadius: '28px',
-            borderBottomRightRadius: '28px',
-            position: 'absolute',
-            width: '100%',
-            bottom: 0,
-          }}
-        >
-          {text && (
+        {!isSuccess && (
+          <Box
+            sx={{
+              p: 1,
+              display: 'flex',
+              gap: 1,
+              justifyContent: 'flex-end',
+              backgroundColor: 'white',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: 'greyNeutral.60',
+              borderBottomLeftRadius: '28px',
+              borderBottomRightRadius: '28px',
+              position: 'absolute',
+              width: '100%',
+              bottom: 0,
+            }}
+          >
+            {inputValue && !isAnswerLoading && (
+              <RoundedIconButton
+                label="Clear input"
+                onClick={handleClearTextInput}
+                variantType="contained"
+                icon={<CloseIcon />}
+              />
+            )}
             <RoundedIconButton
-              label="Clear input"
-              onClick={handleClearTextInput}
-              variantType="contained"
-              icon={<CloseIcon />}
+              label="Paraphrase"
+              onClick={handleParaphrase}
+              variantType="outlined"
+              disabled={!inputValue || isAnswerLoading}
             />
-          )}
-          <RoundedIconButton
-            label="Paraphrase"
-            onClick={handleParaphraseButtonClick}
-            variantType="outlined"
-            disabled={!text}
-          />
-        </Box>
+          </Box>
+        )}
 
-        {!text && (
+        {!inputValue && (
           <Box
             sx={{
               position: 'absolute',
@@ -134,9 +153,10 @@ export default function Home() {
           </Box>
         )}
       </Box>
+
       {error && (
         <FormHelperText sx={{ color: 'error.main', pl: 2, mt: '12px' }}>
-          Error Message
+          {error.message}
         </FormHelperText>
       )}
     </Container>
