@@ -34,13 +34,20 @@ cd test-task-paraphrasing
 # 2. Install dependencies
 npm install
 
-# 3. Create your local env file
-cp .env
+# 3. Create your local env file in a root of a project
+.env
 
 # 4. Fill it in
 NEXT_PUBLIC_GEMINI_KEY={you know where to find it, right?;)}
 NEXT_PUBLIC_OPENAI_KEY={you know where to find it, right?;)}
 
 # 5. npm run dev , go to http://localhost:3000 and enjoy
+
+(
+ Psss,
+ it`s already deployed over here https://test-paraphraser-ai.netlify.app/ 
+ just don`t tell anyone, let it be a secret
+)
+
 
 MIT © 2025 — made with ❤️ and TypeScript.
